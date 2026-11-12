@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Teacher's Day! 💐</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', Georgia, sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* === PAGE BASE STYLES === */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page.active { display: flex; }
+
+        /* === FALLING PETALS (all pages) === */
+        .petals-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .petal {
+            position: absolute;
+            top: -50px;
+            font-size: 22px;
+            animation: fall linear infinite;
+            opacity: 0.75;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 0.9; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* === MAIN PAGE === */
+        #main-page {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e);
+        }
+        .photo-section {
+            position: relative; z-index: 5; text-align: center; margin-bottom: 30px;
+        }
+        .photo-section h2 {
+            color: #8e44ad; font-size: 24px; margin-bottom: 20px;
+        }
+        .teacher-photo {
+            width: 220px; height: 220px; border-radius: 50%;
+            object-fit: cover; border: 6px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            animation: floatPhoto 3s ease-in-out infinite;
+            transition: transform 0.4s ease;
+            background: #f8d7da;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+        @keyframes floatPhoto {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .teacher-photo:hover {
+            transform: scale(1.08); border-color: #f5576c;
+        }
+        .card {
+            background: white; max-width: 480px; width: 100%;
+            padding: 45px 35px; border-radius: 28px;
+            box-shadow: 0 15px 40px rgba(211,84,0,0.2);
+            text-align: center; position: relative; z-index: 10;
+            transform: translateY(30px); opacity: 0;
+            animation: cardAppear 1.2s forwards;
+        }
+        @keyframes cardAppear {
+            to { transform: translateY(0); opacity: 1; }
+        }
+        h1 { color: #d35400; font-size: 32px; margin-bottom: 10px; }
+        .subtitle { color: #7f8c8d; font-size: 17px; margin-bottom: 35px; }
+        .buttons-container { display: flex; flex-direction: column; gap: 20px; }
+        .btn {
+            padding: 18px 30px; font-size: 18px; border: none;
+            border-radius: 50px; cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .btn:hover { transform: scale(1.08); }
+        .message-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2); color: white;
+        }
+        .surprise-btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c); color: white;
+        }
+
+        /* === MESSAGE PAGE === */
+        #message-page {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7, #ffecd2);
+        }
+        .message-text {
+            color: #5c4033; font-size: 18px; line-height: 2; margin-bottom: 25px;
+        }
+        .heart {
+            color: #e74c3c; font-size: 26px; display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .sign-off {
+            margin-top: 10px; font-weight: bold; color: #8e44ad; font-size: 17px;
+        }
+        .back-btn {
+            margin-top: 30px; padding: 12px 30px;
+            background: #ddd; color: #333; border: none;
+            border-radius: 50px; cursor: pointer; font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: #ccc; transform: scale(1.05); }
+
+        /* === SURPRISE PAGE — BLOOMING FLOWERS === */
+        #surprise-page {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9, #a5d6a7);
+        }
+        .flowers-container {
+            display: flex; justify-content: center; align-items: flex-end;
+            gap: 8px; height: 180px; margin-bottom: 20px;
+        }
+        .flower {
+            font-size: 0; transition: font-size 1s ease-out;
+            transform-origin: bottom center;
+        }
+        .flower.bloom {
+            font-size: 55px; animation: sway 3s ease-in-out infinite;
+        }
+        .flower:nth-child(1).bloom { animation-delay: 0s; }
+        .flower:nth-child(2).bloom { animation-delay: 0.2s; }
+        .flower:nth-child(3).bloom { animation-delay: 0.4s; }
+        .flower:nth-child(4).bloom { animation-delay: 0.6s; }
+        .flower:nth-child(5).bloom { animation-delay: 0.8s; }
+        @keyframes sway {
+            0%,100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        .bloom-text {
+            font-size: 19px; color: #2e7d32; line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        .green-back {
+            background: #a5d6a7; color: #2e7d32;
+        }
+        .green-back:hover { background: #81c784; }
+    </style>
+</head>
+<body>
+
+    <!-- 🌸 FALLING PETALS (shared) -->
+    <div class="petals-container" id="petalsContainer"></div>
+
+    <!-- ============= MAIN PAGE ============= -->
+    <div class="page active" id="main-page">
+        <div class="photo-section">
+            <h2>🌟 Happy Teachers Day Sir🌟</h2>
+            <!-- TEACHER PHOTO — Replace the emoji with your picture below -->
+            <div class="teacher-photo" id="teacherPic">👩‍🏫</div>
+        </div>
+
+        <div class="card">
+            <h1>🌸 Happy Teacher's Day! 🌸</h1>
+            <p class="subtitle">Please choose what you'd like to see 💝</p>
+
+            <div class="buttons-container">
+                <button class="btn message-btn" onclick="showPage('message')">
+                    💌 Read Special Message
+                </button>
+                <button class="btn surprise-btn" onclick="showPage('surprise')">
+                    🌺 Open Flower Surprise
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============= MESSAGE PAGE ============= -->
+    <div class="page" id="message-page">
+        <div class="card">
+            <h1>💌 A Special Message 💌</h1>
+            <p class="message-text">
+                Dear Sir Randy,<br><br>
+                Thank you for guiding us, inspiring us,<br>
+                and believing in us even when we struggle.<br>
+                You teach with your heart and lead with kindness.<br>
+                Every lesson, every smile, every word of encouragement —<br>
+                it all stays with us forever.<br><br>
+                May you be blessed with love, joy, and good health.<br>
+                We are so proud to be your students! <span class="heart">❤️</span>
+            </p>
+            <p class="sign-off">— From [Your Name / Your Class Section]</p>
+
+            <button class="back-btn" onclick="showPage('main')">← Go Back</button>
+        </div>
+    </div>
+
+    <!-- ============= SURPRISE PAGE ============= -->
+    <div class="page" id="surprise-page">
+        <div class="card">
+            <h1>🌺 A Blooming Surprise 🌺</h1>
+
+            <div class="flowers-container" id="flowersBox">
+                <span class="flower">🌷</span>
+                <span class="flower">🌸</span>
+                <span class="flower">🌻</span>
+                <span class="flower">🌹</span>
+                <span class="flower">🌺</span>
+            </div>
+
+            <p class="bloom-text">
+                These flowers are blooming just for you! <span class="heart">❤️</span><br>
+                Like these flowers, you help us grow and shine.<br>
+                Thank you for making our world more beautiful! ✨<br>
+                💐 Happy Teacher's Day! Sir Randy💐
+            </p>
+
+            <button class="back-btn green-back" onclick="showPage('main')">← Go Back</button>
+        </div>
+    </div>
+
+    <!-- ⚡ JAVASCRIPT -->
+    <script>
+        // === PAGE NAVIGATION ===
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageName + '-page').classList.add('active');
+            if (pageName === 'surprise') startBlooming();
+        }
+
+        // === BLOOMING FLOWERS ===
+        let hasBloomed = false;
+        function startBlooming() {
+            if (hasBloomed) return;
+            hasBloomed = true;
+            document.querySelectorAll('.flower').forEach((f, i) => {
+                setTimeout(() => f.classList.add('bloom'), i * 600);
+            });
+        }
+
+        // === FALLING PETALS ===
+        const petalEmojis = ['🌸','🌺','🌻','🌷','💮','🍃','✨','💖','🌼','🌹'];
+        const container = document.getElementById('petalsContainer');
+        function createPetal() {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            p.innerText = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            p.style.fontSize = (Math.random() * 12 + 16) + 'px';
+            container.appendChild(p);
+            setTimeout(() => p.remove(), 8000);
+        }
+        setInterval(createPetal, 250);
+
+        // === HOW TO ADD YOUR PHOTO ===
+        // 1. Open your photo in browser → right-click → "Copy Image Address"
+        // 2. Paste it between the quotes below:
+        const YOUR_PHOTO_URL = ""; // ← PASTE YOUR IMAGE LINK HERE
+
+        if (YOUR_PHOTO_URL) {
+            const picDiv = document.getElementById('teacherPic');
+            picDiv.style.background = url(${YOUR_PHOTO_URL}) center/cover no-repeat;
+            picDiv.innerHTML = "";
+        }
+    </script>
+</body>
+</html>
